@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "entity.h"
 using namespace std;
+
+
 
 
 int main() {
@@ -27,28 +30,57 @@ int main() {
 	string name = "";
 	int age = 0;
 
-	
-	while (true) {
-		fstream file;				//fstream can be used for reading and writing, ofstream used only for writing to
-		//file.open("createme.txt");
-		cout << "OPEN A SAVE FILE" << endl;
-		string a = "";
-		//int b = 0;
-		cin >> a;
-		file.open(a);
-		if (file.fail()) {
-			std::cerr << "File not found!" << std::endl;
-			return false;
-		}
+
+	fstream file;				//fstream can be used for reading and writing, ofstream used only for writing to
+								//file.open("createme.txt");
+	//cout << "OPEN A SAVE FILE" << endl;
+	//string a = "";
+	////int b = 0;
+	//cin >> a;
+	//file.open(a);
+
+	file.open("createme.txt");
+
+
+	if (file.fail()) {
+		std::cerr << "File not found!" << std::endl;
+		return false;
+	}
+
+	string arr[5];
+
+	Entity entity[5];
+
+	int HowManyEntities = 0;
+	while (HowManyEntities < 5) 
+	{
 		std::string buffer;
-		while (std::getline(file, buffer)) { // this is for reading from a file
-			/*for (unsigned i = 0; i < buffer.length(); i++) {
-				if (i % 3 == 0 || i % 7 == 0) {						 reads from a file anc changes some chars to 0
-					buffer[i] = '0';
-				}
-			}*/
-			std::cout << buffer << std::endl;
+		while (std::getline(file, buffer)) 
+		{ // this is for reading from a file
+			
+			if (buffer[0] == '@')
+			{
+				std::cout << buffer << std::endl;
+				break;
+			}
+				
 		}
+
+		std::getline(file, buffer);
+		entity[HowManyEntities].hitpoints = stof(buffer);
+		std::getline(file, buffer);
+		entity[HowManyEntities].armor = stof(buffer);
+		std::getline(file, buffer);
+		entity[HowManyEntities].strength = stof(buffer);
+		std::getline(file, buffer);
+		entity[HowManyEntities].defense = stof(buffer);
+		std::getline(file, buffer);
+		entity[HowManyEntities].agility = stof(buffer);
+		std::getline(file, buffer);
+		entity[HowManyEntities].luck = stof(buffer);
+		
+		
+		HowManyEntities++;
 
 		/*cout << "What is your name?" << endl;
 		cin >> name;
@@ -58,9 +90,11 @@ int main() {
 		file << age;*/
 
 		//file.clear();
-		file.close();
+		
 		//cout << "Would you like to open another file?" << endl;
 
 	}
+
+	file.close();
 	while (true) {};
 }
